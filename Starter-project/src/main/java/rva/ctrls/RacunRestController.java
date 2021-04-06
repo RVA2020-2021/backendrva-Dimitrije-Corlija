@@ -2,6 +2,8 @@ package rva.ctrls;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +66,7 @@ public class RacunRestController {
 		racunRepository.save(racun);
 		return new ResponseEntity<Racun>(HttpStatus.OK);
 	}
-	
+	@Transactional
 	@DeleteMapping("racun/{id}")
 	public ResponseEntity<Racun> deleteRacun(@PathVariable("id") Integer id)
 	{
@@ -72,6 +74,7 @@ public class RacunRestController {
 		{
 			return new ResponseEntity<Racun>(HttpStatus.NO_CONTENT);
 		}
+		jdbcTemplate.execute("DELETE FROM stavka_racuna WHERE racun="+id);
 			racunRepository.deleteById(id);
 		if(id==-100)
 		{

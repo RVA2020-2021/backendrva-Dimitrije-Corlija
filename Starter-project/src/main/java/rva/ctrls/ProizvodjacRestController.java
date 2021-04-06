@@ -74,6 +74,7 @@ public class ProizvodjacRestController {
 			return new ResponseEntity<Proizvodjac>(HttpStatus.NO_CONTENT);
 			
 		} 
+		jdbcTemplate.execute("DELETE FROM proizvod WHERE proizvodjac="+id);
 		proizvodjacRepository.deleteById(id);
 		if(id == -100)
 		{
