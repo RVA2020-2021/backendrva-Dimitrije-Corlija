@@ -20,7 +20,7 @@ public class Proizvod implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PROIZVOD_ID_GENERATOR", sequenceName="PROIZVOD_SEQ")/*sekvenca je mehanizam koji omogucava da se id automatski inkrementira*/
+	@SequenceGenerator(name="PROIZVOD_ID_GENERATOR", sequenceName="PROIZVOD_SEQ", allocationSize = 1)/*sekvenca je mehanizam koji omogucava da se id automatski inkrementira*/
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROIZVOD_ID_GENERATOR")
 	private Integer id;
 

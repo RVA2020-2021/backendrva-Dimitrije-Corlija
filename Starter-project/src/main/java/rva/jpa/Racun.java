@@ -21,7 +21,7 @@ public class Racun implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="RACUN_ID_GENERATOR", sequenceName="RACUN_SEQ")
+	@SequenceGenerator(name="RACUN_ID_GENERATOR", sequenceName="RACUN_SEQ",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RACUN_ID_GENERATOR")
 	private Integer id;
 

@@ -20,7 +20,7 @@ public class StavkaRacuna implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="STAVKA_RACUNA_ID_GENERATOR", sequenceName="STAVKA_RACUNA_SEQ")
+	@SequenceGenerator(name="STAVKA_RACUNA_ID_GENERATOR", sequenceName="STAVKA_RACUNA_SEQ",allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="STAVKA_RACUNA_ID_GENERATOR")
 	private Integer id;
 

@@ -33,12 +33,12 @@ public class ProizvodRestController {
 	}
 	
 	@GetMapping("proizvod/{id}")
-	public Proizvod getArtikl(@PathVariable ("id") Integer id) {
+	public Proizvod getProizvod(@PathVariable ("id") Integer id) {
 		return  proizvodRepository.getOne(id);
 	}
 	
 	@GetMapping("proizvodNaziv/{naziv}")
-	public Collection<Proizvod> getArtiklByNaziv(@PathVariable ("naziv") String naziv)
+	public Collection<Proizvod> getProizvodByNaziv(@PathVariable ("naziv") String naziv)
 	{
 		return proizvodRepository.findByNazivContainingIgnoreCase(naziv);
 	}
@@ -71,6 +71,7 @@ public class ProizvodRestController {
 		{
 			return new ResponseEntity<Proizvod>(HttpStatus.NO_CONTENT);
 		}
+		jdbcTemplate.execute("DELETE FROM proizvodjac WHERE proizvod="+id);
 		proizvodRepository.deleteById(id);
 		if(id == -100)
 		{

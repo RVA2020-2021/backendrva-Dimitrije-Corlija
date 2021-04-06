@@ -33,18 +33,18 @@ public class ProizvodjacRestController {
 	}
 	
 	@GetMapping("proizvodjac/{id}")
-	public Proizvodjac getArtikl(@PathVariable ("id") Integer id) {
+	public Proizvodjac getProizvodjac(@PathVariable ("id") Integer id) {
 		return  proizvodjacRepository.getOne(id);
 	}
 	
 	@GetMapping("proizvodjacNaziv/{naziv}")
-	public Collection<Proizvodjac> getArtiklByNaziv(@PathVariable ("naziv") String naziv)
+	public Collection<Proizvodjac> getProizvodjacByNaziv(@PathVariable ("naziv") String naziv)
 	{
 		return proizvodjacRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@PostMapping("proizvodjac")
-	public ResponseEntity<Proizvodjac> insertProizvod(@RequestBody Proizvodjac proizvodjac)
+	public ResponseEntity<Proizvodjac> insertProizvodjac(@RequestBody Proizvodjac proizvodjac)
 	{
 		if(!proizvodjacRepository.existsById(proizvodjac.getId()))
 		{
