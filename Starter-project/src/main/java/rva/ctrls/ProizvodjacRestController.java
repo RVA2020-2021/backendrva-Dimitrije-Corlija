@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Proizvodjac;
 import rva.repository.ProizvodjacRepository;
 
 @RestController
+@Api(tags = {"Proizvodjac CRUD operacije"})
 public class ProizvodjacRestController {
 
 	
@@ -28,22 +31,26 @@ public class ProizvodjacRestController {
 	private JdbcTemplate jdbcTemplate;
 	
 	@GetMapping("proizvodjac")
+	@ApiOperation(value="Vraca kolekciju svih proizvodjaca iz baze podataka")
 	public Collection<Proizvodjac> getProizvod() {
 		return proizvodjacRepository.findAll();
 	}
 	
 	@GetMapping("proizvodjac/{id}")
+	@ApiOperation(value="Vraca proizvodjaca na osnovu prosledjenog ID-ija")
 	public Proizvodjac getProizvodjac(@PathVariable ("id") Integer id) {
 		return  proizvodjacRepository.getOne(id);
 	}
 	
 	@GetMapping("proizvodjacNaziv/{naziv}")
+	@ApiOperation(value="Vraca kolekciju proizvodjaca na osnovu pronadjenog naziva proizvodjaca")
 	public Collection<Proizvodjac> getProizvodjacByNaziv(@PathVariable ("naziv") String naziv)
 	{
 		return proizvodjacRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@PostMapping("proizvodjac")
+	@ApiOperation(value="Dodaje novog proizvodjaca u bazu podataka")
 	public ResponseEntity<Proizvodjac> insertProizvodjac(@RequestBody Proizvodjac proizvodjac)
 	{
 		if(!proizvodjacRepository.existsById(proizvodjac.getId()))
@@ -55,6 +62,7 @@ public class ProizvodjacRestController {
 	}
 	
 	@PutMapping("proizvodjac")
+	@ApiOperation(value="Update-uje proizvodjaca iz baze podataka")
 	public ResponseEntity<Proizvodjac> updateProizvodjac(@RequestBody Proizvodjac proizvodjac)
 	{
 		if(!proizvodjacRepository.existsById(proizvodjac.getId()))
@@ -67,6 +75,7 @@ public class ProizvodjacRestController {
 	}
 	
 	@DeleteMapping("proizovdjac/{id}")
+	@ApiOperation(value="Brise proizvodjaca iz baze podatak")
 	public ResponseEntity<Proizvodjac> deleteProizvodjac(@PathVariable Integer id)
 	{
 		if(!proizvodjacRepository.existsById(id))

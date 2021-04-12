@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Proizvod;
 import rva.repository.ProizvodRepository;
 
@@ -30,22 +30,26 @@ public class ProizvodRestController {
 	private JdbcTemplate jdbcTemplate;
 	
 	@GetMapping("proizvod")
+	@ApiOperation(value="Vraca kolekciju svih proizvoda iz baze podataka")
 	public Collection<Proizvod> getProizvod() {
 		return proizvodRepository.findAll();
 	}
 	
 	@GetMapping("proizvod/{id}")
+	@ApiOperation(value="Vraca proizvod na osnovu prosledjenog ID-ija")
 	public Proizvod getProizvod(@PathVariable ("id") Integer id) {
 		return  proizvodRepository.getOne(id);
 	}
 	
 	@GetMapping("proizvodNaziv/{naziv}")
+	@ApiOperation(value="Vraca kolekciju proizvoda na osnovu pronadjenog naziva proizvoda")
 	public Collection<Proizvod> getProizvodByNaziv(@PathVariable ("naziv") String naziv)
 	{
 		return proizvodRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
 	@PostMapping("proizvod")
+	@ApiOperation(value="Dodaje novi proizvod u bazu podataka")
 	public ResponseEntity<Proizvod> insertProizvod(@RequestBody Proizvod proizvod)
 	{
 		if(!proizvodRepository.existsById(proizvod.getId()))
@@ -57,6 +61,7 @@ public class ProizvodRestController {
 	}
 	
 	@PutMapping("proizvod")
+	@ApiOperation(value="Update-uje proizvoda iz baze podataka")
 	public ResponseEntity<Proizvod> updateProizvod(@RequestBody Proizvod proizvod)
 	{
 		if(!proizvodRepository.existsById(proizvod.getId()))
@@ -68,6 +73,7 @@ public class ProizvodRestController {
 	}
 	@Transactional
 	@DeleteMapping("proizvod/{id}")
+	@ApiOperation(value="Brise proizvod iz baze podatak")
 	public ResponseEntity<Proizvod> deleteProizvod(@PathVariable Integer id)
 	{
 		if(!proizvodRepository.existsById(id))

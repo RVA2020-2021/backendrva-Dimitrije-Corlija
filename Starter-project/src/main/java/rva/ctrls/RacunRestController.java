@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import io.swagger.annotations.ApiOperation;
 import rva.jpa.Racun;
 import rva.repository.RacunRepository;
 
@@ -30,22 +30,26 @@ public class RacunRestController {
 	private JdbcTemplate jdbcTemplate;
 	
 	@GetMapping("racun")
+	@ApiOperation(value="Vraca kolekciju svih racuna iz baze podataka")
 	public Collection<Racun> getRacun(){
 		return racunRepository.findAll();
 	}
 	
 	@GetMapping("racun/{id}")
+	@ApiOperation(value="Vraca racun na osnovu prosledjenog ID-ija")
 	public Racun getRacun(@PathVariable ("id") Integer id) {
 		return  racunRepository.getOne(id);
 	}
 	
 	@GetMapping("racunNaziv/{naziv}")
+	@ApiOperation(value="Vraca kolekciju racuna na osnovu pronadjenog naziva racuna")
 	public Collection<Racun> getRacunByNaziv(@PathVariable ("naziv") String naziv)
 	{
 		return racunRepository.findByNacinPlacanja(naziv);
 	}
 	
 	@PostMapping("racun")
+	@ApiOperation(value="Dodaje novi racun u bazu podataka")
 	public ResponseEntity<Racun> insertRacun(@RequestBody Racun racun)
 	{
 		if(!racunRepository.existsById(racun.getId()))
@@ -57,6 +61,7 @@ public class RacunRestController {
 	}
 	
 	@PutMapping("racun")
+	@ApiOperation(value="Update-uje racun iz baze podataka")
 	public ResponseEntity<Racun> updateRacun(@RequestBody Racun racun)
 	{
 		if(!racunRepository.existsById(racun.getId()))
@@ -68,6 +73,7 @@ public class RacunRestController {
 	}
 	@Transactional
 	@DeleteMapping("racun/{id}")
+	@ApiOperation(value="Brise racun iz baze podatak")
 	public ResponseEntity<Racun> deleteRacun(@PathVariable("id") Integer id)
 	{
 		if(!racunRepository.existsById(id))

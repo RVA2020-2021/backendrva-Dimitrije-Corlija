@@ -1,18 +1,4 @@
---Test podatak proizvodjac
-INSERT INTO "proizvodjac"("id", "naziv","adresa", "kontakt")
-VALUES (-100, 'Test naziv','Test adresa','063789543');
---Test podatak proizvod
-INSERT INTO "proizvod"("id","naziv","proizvodjac")
-VALUES (-100,'Test naziv',1);
---Test podatak racun
-INSERT INTO "racun"("id","datum","nacin_placanja")
-VALUES(-100,to_date('05.03.2020.', 'dd.mm.yyyy.'),'Test placanje');
---Test podatak stavka_racuna
-INSERT INTO "stavka_racuna"("id","redni_broj","kolicina","jedinica_mere","cena","racun","proizvod")
-VALUES(-100,3,2,'test jedinica_mere',115,2,5);
---Kraj test podataka
 
-	
 
 
 INSERT INTO "proizvodjac"("id", "naziv","adresa", "kontakt")
@@ -25,8 +11,10 @@ INSERT INTO "proizvodjac"("id", "naziv","adresa", "kontakt")
 VALUES (nextval('proizvodjac_seq'), 'Knjaz Milos','Bulerva oslobodjenja 12','065 888 999');
 INSERT INTO "proizvodjac"("id", "naziv","adresa", "kontakt")
 VALUES (nextval('proizvodjac_seq'), 'Nescafe','Bulevar Patrijarha Pavla','066 544 344');
+INSERT INTO "proizvodjac"("id", "naziv","adresa", "kontakt")
+VALUES (-100, 'Test naziv','Test adresa','063789543');
 
-select * from proizvodjac
+
 
 INSERT INTO "proizvod"("id","naziv","proizvodjac")
 VALUES (nextval('proizvod_seq'),'Mleko',1);
@@ -48,8 +36,10 @@ INSERT INTO "proizvod"("id","naziv","proizvodjac")
 VALUES (nextval('proizvod_seq'),'Nescafe',5);
 INSERT INTO "proizvod"("id","naziv","proizvodjac")
 VALUES (nextval('proizvod_seq'),'Nescafe',5);
+INSERT INTO "proizvod"("id","naziv","proizvodjac")
+VALUES (-100,'Test naziv',1);
 
-select * from proizvod
+
 
 INSERT INTO "racun"("id","datum","nacin_placanja")
 VALUES(nextval('racun_seq'),to_date('05.03.2020.', 'dd.mm.yyyy.'),'kes');
@@ -67,8 +57,10 @@ INSERT INTO "racun"("id","datum","nacin_placanja")
 VALUES(nextval('racun_seq'),to_date('20.03.2021.', 'dd.mm.yyyy.'),'kartica');
 INSERT INTO "racun"("id","datum","nacin_placanja")
 VALUES(nextval('racun_seq'),to_date('23.12.2017.', 'dd.mm.yyyy.'),'kes');
+INSERT INTO "racun"("id","datum","nacin_placanja")
+VALUES(-100,to_date('05.03.2020.', 'dd.mm.yyyy.'),'Test placanje');
 
-select* from racun
+
 
 INSERT INTO "stavka_racuna"("id","redni_broj","kolicina","jedinica_mere","cena","racun","proizvod")
 VALUES(nextval('stavka_racuna_seq'),1,2,'l',115,1,5);
@@ -80,8 +72,9 @@ INSERT INTO "stavka_racuna"("id","redni_broj","kolicina","jedinica_mere","cena",
 VALUES(nextval('stavka_racuna_seq'),1,2,'l',99,2,1);
 INSERT INTO "stavka_racuna"("id","redni_broj","kolicina","jedinica_mere","cena","racun","proizvod")
 VALUES(nextval('stavka_racuna_seq'),2,8,'kom',23,2,9);
+INSERT INTO "stavka_racuna"("id","redni_broj","kolicina","jedinica_mere","cena","racun","proizvod")
+VALUES(-100,3,2,'test jedinica_mere',115,2,5);
 
-select * from stavka_racuna
 
 
 
