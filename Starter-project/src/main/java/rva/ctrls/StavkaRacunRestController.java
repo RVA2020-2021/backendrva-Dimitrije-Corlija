@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,22 +17,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
+import rva.jpa.Proizvod;
 import rva.jpa.Racun;
 import rva.jpa.StavkaRacuna;
+import rva.repository.ProizvodRepository;
 import rva.repository.RacunRepository;
 import rva.repository.StavkaRacunaRepository;
-
+@CrossOrigin
 @RestController
 public class StavkaRacunRestController {
 
 	@Autowired
 	private StavkaRacunaRepository stavkaRacunaRepository;
 	
+
 	@Autowired // ova anotacija omogucava injekciju zavisnosti
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
 	private RacunRepository racunRepository;
+	
+	@Autowired
+	private ProizvodRepository proizvodRepository;
 	
 	@GetMapping("stavkaRacuna")
 	@ApiOperation(value="Vraca kolekciju svih stavki racuna iz baze podataka")
@@ -51,6 +58,9 @@ public class StavkaRacunRestController {
 		Racun r = racunRepository.getOne(id);
 		return  stavkaRacunaRepository.findByRacun(r);
 	}
+	
+	
+	
 	@GetMapping("stavkaRacunaCena/{cena}")
 	@ApiOperation(value="Vraca stavke racuna cije su cene manje od prosledjene cene")
 	public Collection<StavkaRacuna> getStavkaRacunaCena(@PathVariable ("cena") BigDecimal cena) {

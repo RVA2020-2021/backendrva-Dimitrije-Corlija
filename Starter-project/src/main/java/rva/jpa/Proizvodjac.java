@@ -31,7 +31,7 @@ public class Proizvodjac implements Serializable {
 	private String naziv;
 	@JsonIgnore
 	//bi-directional many-to-one association to Proizvod
-	@OneToMany(mappedBy="proizvodjac")
+	@OneToMany(mappedBy="proizvodjac",cascade= {CascadeType.DETACH,CascadeType.REMOVE})
 	private List<Proizvod> proizvods;
 
 	public Proizvodjac() {

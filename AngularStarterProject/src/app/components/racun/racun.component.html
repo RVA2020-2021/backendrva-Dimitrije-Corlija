@@ -1,0 +1,57 @@
+<mat-toolbar color="primary">
+    <span class="title-center">Racun</span>
+</mat-toolbar>
+  
+  <div class="container mat-elavation-z8">
+    <mat-form-field>
+      <input matInput placeholder="Pretraga racun" (keyup)="applayFilter($event.target.value)"> <!--ovim mozemo da pristupimo i korisnikovom unosu-->
+  </mat-form-field>
+    <mat-table #table [dataSource]="dataSource" class="mat-cell" matSort><!-- #table lokalni identifikator za lkalno identifikovanje nase tabele-->
+      <ng-container matColumnDef="id"><!--ID--><!-- datasource zbog propertija koje smo dodali -->
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell> <!-- definisanje glavne celije-->
+        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell> <!-- same celije u koloni gde svaka celija predstavlja red tabele, i treba nam od tog reda property ID-->
+      </ng-container>
+      <!--Datum-->
+      <ng-container matColumnDef="datum">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Datum</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{ row.datum | date:"dd.MM.yyyy" }}</mat-cell>
+      </ng-container>
+      <!-- NacinPlacanja -->
+      <ng-container matColumnDef="nacinPlacanja">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Nacin placanja</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.nacinPlacanja }}</mat-cell>
+      </ng-container>
+      <!-- Action Buttons , OVDE SE DODAJU DVA BUTTONA ZA IZMENU I BRISANJE-->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+            <button (click)="openDialog(1)" mat-icon-button color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i = index">
+            <button (click)="openDialog(2, row.id, row.datum, row.nacinplacanja)" mat-icon-button color="primary">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+
+            <button (click)="openDialog(3, row.id, row.datum, row.nacinplacanja)" mat-icon-button color="primary">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)">
+    </mat-row>
+</mat-table>
+<mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5,10,25,100]">
+</mat-paginator>
+</div>
+<div class="container mat-elavation-z8">
+  <app-stavka-racuna *ngIf="selektovanRacun1" [selektovanRacun]="selektovanRacun1"
+  ><!-- ovim smo rekli da ce se u divu prikazivati html od stavke racuna , -->
+
+  </app-stavka-racuna>
+  
+</div>

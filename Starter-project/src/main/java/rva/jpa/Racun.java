@@ -32,7 +32,7 @@ public class Racun implements Serializable {
 	private String nacinPlacanja;
 	@JsonIgnore
 	//bi-directional many-to-one association to StavkaRacuna
-	@OneToMany(mappedBy="racun")
+	@OneToMany(mappedBy="racun", cascade= {CascadeType.DETACH,CascadeType.REMOVE})//cascade brisanje omogucava da se obrisu i sve stavke koje su referencirale taj artikl 
 	private List<StavkaRacuna> stavkaRacunas;
 
 	public Racun() {

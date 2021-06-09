@@ -1,0 +1,34 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1"> Dodavanje racuna </h3><!-- ngIf obezbedjuje da se u jednom trenutku prikaze samo jedan od ova 3 naslova-->
+    <h3 mat-dialog-title *ngIf="flag ==2"> Modifikacija racuna: {{data.id}} </h3> <!--da bi se ispisao i naziv proizvoda koji se trenutno modifikuje -->
+    <h3 mat-dialog-title *ngIf="flag ==3"> Brisanje racuna: {{data.id}}  </h3>
+    <form class="mat-dialog-content" #formControl="ngForm"><!--#formControl je lokalna referenca na formu-->
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput [matDatepicker]="datum" placeholder="Datum kreiranja" [(ngModel)]="data.datum"
+                name="datum" [disabled]="flag == 3">
+              <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
+              <mat-datepicker #datum></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput placeholder="nacinPlacanja" [(ngModel)]="data.nacinPlacanja" name="nacinPlacanja" [disabled]= "flag == 3" required>
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button *ngIf="flag==1" type="submit" [mat-dialog-close]="1" (click)="addRacun()" [disabled]="!formControl.valid">
+                Sačuvaj
+            </button>
+            <button mat-button *ngIf="flag==2" type="submit" [mat-dialog-close]="1" (click)="updateRacun()" [disabled]="!formControl.valid">
+                Sačuvaj
+            </button>
+            <button mat-button *ngIf="flag==3" type="submit" [mat-dialog-close]="1" (click)="deleteRacun()">
+                Obriši
+            </button>
+            <button mat-button (click)="cancel()">
+                Poništi
+            </button>
+        </div>
+    </form>
+</div>

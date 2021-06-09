@@ -2,10 +2,13 @@ package rva.ctrls;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import rva.jpa.Proizvodjac;
 import rva.repository.ProizvodjacRepository;
-
+@CrossOrigin
 @RestController
 @Api(tags = {"Proizvodjac CRUD operacije"})
 public class ProizvodjacRestController {
@@ -32,7 +35,7 @@ public class ProizvodjacRestController {
 	
 	@GetMapping("proizvodjac")
 	@ApiOperation(value="Vraca kolekciju svih proizvodjaca iz baze podataka")
-	public Collection<Proizvodjac> getProizvod() {
+	public Collection<Proizvodjac> getProizvodjac() {
 		return proizvodjacRepository.findAll();
 	}
 	
@@ -73,8 +76,8 @@ public class ProizvodjacRestController {
 		proizvodjacRepository.save(proizvodjac);
 		return new ResponseEntity<Proizvodjac>(HttpStatus.OK);
 	}
-	
-	@DeleteMapping("proizovdjac/{id}")
+	@Transactional
+	@DeleteMapping("proizvodjac/{id}")
 	@ApiOperation(value="Brise proizvodjaca iz baze podatak")
 	public ResponseEntity<Proizvodjac> deleteProizvodjac(@PathVariable Integer id)
 	{
@@ -83,6 +86,7 @@ public class ProizvodjacRestController {
 			return new ResponseEntity<Proizvodjac>(HttpStatus.NO_CONTENT);
 			
 		} 
+		jdbcTemplate.execute("DELETE FROM stavka_racuna WHERE proizvod in (select id from proizvod where proizvodjac="+id+")");
 		jdbcTemplate.execute("DELETE FROM proizvod WHERE proizvodjac="+id);
 		proizvodjacRepository.deleteById(id);
 		if(id == -100)

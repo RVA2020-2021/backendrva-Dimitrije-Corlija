@@ -1,0 +1,36 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1"> Dodavanje proizvodjaca </h3><!-- ngIf obezbedjuje da se u jednom trenutku prikaze samo jedan od ova 3 naslova-->
+    <h3 mat-dialog-title *ngIf="flag ==2"> Modifikacija proizvodjaca: {{data.naziv}} </h3> <!--da bi se ispisao i naziv proizvoda koji se trenutno modifikuje -->
+    <h3 mat-dialog-title *ngIf="flag ==3"> Brisanje proizvodjaca: {{data.naziv}}  </h3>
+    <form class="mat-dialog-content" #formControl="ngForm"><!--#formControl je lokalna referenca na formu-->
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput placeholder="Adresa" [(ngModel)]="data.adresa" name="adresa" [disabled]= "flag == 3" required>
+            </mat-form-field>
+        </div>
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput placeholder="Kontakt" [(ngModel)]="data.kontakt" name="kontakt" [disabled]= "flag == 3" required>
+            </mat-form-field>
+        </div>
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput placeholder="Naziv"  [(ngModel)] = "data.naziv" name="naziv" [disabled]= "flag == 3" required><!--[disabled]="flag == 3--kada je u pitanju brisanje zelim da mi prikazes naziv elementa, odnosno popunjeno to input polje, ali da ja kao korisnik ne mogu da menjam naziv, vec samo da potvrdim brisanje, placeholder-bice ispisan naziv sve dok korisnik nesto konkretno ne ispise, required znaci da ga ne mozemo ostaviti praznim,ngModel-nasa komponenta ce da prosledjuje neke podatke HTML-U, a na isti nacin ce HTML da vrati neke podatke komponenti-->
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button *ngIf="flag==1" type="submit" [mat-dialog-close]="1" (click)="addProizvodjac()" [disabled]="!formControl.valid">
+                Sačuvaj
+            </button>
+            <button mat-button *ngIf="flag==2" type="submit" [mat-dialog-close]="1" (click)="updateProizvodjac()" [disabled]="!formControl.valid">
+                Sačuvaj
+            </button>
+            <button mat-button *ngIf="flag==3" type="submit" [mat-dialog-close]="1" (click)="deleteProizvodjac()">
+                Obriši
+            </button>
+            <button mat-button (click)="cancel()">
+                Poništi
+            </button>
+        </div>
+    </form>
+</div>

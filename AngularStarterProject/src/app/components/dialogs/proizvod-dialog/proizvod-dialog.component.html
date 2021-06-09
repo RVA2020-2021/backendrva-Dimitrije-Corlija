@@ -1,0 +1,36 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1"> Dodavanje proizvoda </h3><!-- ngIf obezbedjuje da se u jednom trenutku prikaze samo jedan od ova 3 naslova-->
+    <h3 mat-dialog-title *ngIf="flag ==2"> Modifikacija proizvoda: {{data.naziv}} </h3> <!--da bi se ispisao i naziv proizvoda koji se trenutno modifikuje -->
+    <h3 mat-dialog-title *ngIf="flag ==3"> Brisanje proizvoda: {{data.naziv}}  </h3>
+
+    <form class="mat-dialog-content" #formControl="ngForm"><!--#formControl je lokalna referenca na formu-->
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <input matInput placeholder="naziv"  [(ngModel)] = "data.naziv" name="naziv" [disabled]= "flag == 3" required><!--[disabled]="flag == 3--kada je u pitanju brisanje zelim da mi prikazes naziv elementa, odnosno popunjeno to input polje, ali da ja kao korisnik ne mogu da menjam naziv, vec samo da potvrdim brisanje, placeholder-bice ispisan naziv sve dok korisnik nesto konkretno ne ispise, required znaci da ga ne mozemo ostaviti praznim,ngModel-nasa komponenta ce da prosledjuje neke podatke HTML-U, a na isti nacin ce HTML da vrati neke podatke komponenti-->
+            </mat-form-field>
+        </div>
+        <div class="form"><!--smestamo elemente-->
+            <mat-form-field>
+                <mat-select [(ngModel)] = "data.proizvodjac" placeholder="Proizvodjac"  name="proizvodjac" [compareWith]="compareTo" [disabled]= "flag == 3">
+                    <mat-option *ngFor="let proizvodjac of proizvodjaci" [value]="proizvodjac">
+                        {{ proizvodjac.naziv }}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button *ngIf="flag==1" type="submit" [mat-dialog-close]="1" (click)="addProizvod()" [disabled]="!formControl.valid"> 
+                Sacuvaj
+            </button>
+            <button mat-button *ngIf="flag==2" type="submit" [mat-dialog-close]="1"   (click)="updateProizvod()" [disabled]="!formControl.valid">
+                Sacuvaj
+            </button><!--disabled je setovan na true u slucaju da forma nije validna -->
+            <button mat-button *ngIf="flag==3" type="submit" [mat-dialog-close]="1" (click)="deleteProizvod()" >
+                Obrisi
+            </button>
+            <button mat-button (click)="cancel()">
+                Ponisti
+            </button>
+        </div>
+    </form>
+</div>

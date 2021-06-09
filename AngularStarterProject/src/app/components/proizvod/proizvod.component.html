@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+    <span class="title-center">Proizvod</span>
+</mat-toolbar>
+  
+  <div class="container mat-elavation-z8">
+    <mat-form-field>
+        <input matInput placeholder="Pretraga proizvoda" (keyup)="applayFilter($event.target.value)"> <!--ovim mozemo da pristupimo i korisnikovom unosu-->
+    </mat-form-field>
+    <mat-table #table matSort [dataSource]="dataSource" class="mat-cell"><!-- #table lokalni identifikator za lkalno identifikovanje nase tabele-->
+      <!--ID--><!-- datasource zbog propertija koje smo dodali -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell> <!-- definisanje glavne celije-->
+        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell> <!-- same celije u koloni gde svaka celija predstavlja red tabele, i treba nam od tog reda property ID-->
+      </ng-container>
+      <!--Naziv-->
+      <ng-container matColumnDef="naziv">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.naziv }}</mat-cell>
+      </ng-container>
+      <!-- Proizvodjac -->
+      <ng-container matColumnDef="proizvodjac">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Proizvodjac</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.proizvodjac.naziv }}</mat-cell>
+      </ng-container>
+      <!-- Action Buttons , OVDE SE DODAJU DVA BUTTONA ZA IZMENU I BRISANJE-->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button (click)="openDialog(1)" mat-icon-button color="primary"> <!-- to je boja koju smo definisali jos na pocetku ona pink-->
+            <mat-icon>add</mat-icon> <!-- U HEDERU SE NALAZI ADD DUGME -->
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index"><!-- index koji nam vraca u kojem redu se nalazimo -->
+          <button (click)="openDialog(2, row.id, row.naziv, row.proizvodjac)" mat-icon-button color="primary">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button (click)="openDialog(3, row.id, row.naziv, row.proizvodjac)" mat-icon-button color="primary"><!--ovom ovde linijom smo omogucili da po otvranju dialoga budu unapred sipisani podaci u dialogu-->
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row> <!-- glavni red gde su naslovi-->
+      <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns">  <!--    svaki sledeci red, cursor: pointer znaci da kada kursorom predjemo preko neke celije da se ojavi strelica-->
+      </mat-row>
+    </mat-table>
+    <mat-paginator [length]="100" [pageSize]="5" [pageSizeOptions]="[5,10,25,100]">
+    </mat-paginator>
+  </div>
+  

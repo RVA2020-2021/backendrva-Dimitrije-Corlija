@@ -1,0 +1,54 @@
+<!-- 
+<app-vozilo></app-vozilo>
+<button mat-button>OK</button>
+-->
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="over" [fixedInViewport]="true" opened mode="side">
+      <mat-accordion>
+          <a mat-button style="text-align: center">
+              <mat-icon [routerLink]= "['/home']"> <!--sta ce se desiti ukoliko kliknemo na ikonicu home-->
+                  Home
+              </mat-icon>
+          </a>
+          <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                  <mat-panel-title>
+                      Aplikacija
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      Aplikacija za vodjenje evidencije
+                  </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/proizvodjac']">Proizvodjac</a>
+              </mat-nav-list>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/proizvod']">Proizvod</a>
+              </mat-nav-list>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/racun']">Racun</a>
+              </mat-nav-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                  <mat-panel-title>
+                      Informacije
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      Osnovne informacije o aplikaciji
+                  </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/home']">Početna</a>
+              </mat-nav-list>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/author']">Autor</a>
+              </mat-nav-list>
+              <mat-nav-list>
+                  <a mat-button [routerLink]="['/about']">O nama</a>
+              </mat-nav-list>
+          </mat-expansion-panel>
+      </mat-accordion>
+  </mat-sidenav>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
